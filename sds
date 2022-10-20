@@ -1,0 +1,359 @@
+local ScreenGui = Instance.new("ScreenGui")
+
+
+local SoundPlayer = Instance.new("Frame")
+
+
+local UICorner = Instance.new("UICorner")
+
+
+local Image = Instance.new("ImageLabel")
+
+
+local UICorner_2 = Instance.new("UICorner")
+
+
+local Header = Instance.new("TextLabel")
+
+
+local UICorner_3 = Instance.new("UICorner")
+
+
+local PlayBtn = Instance.new("ImageButton")
+
+
+local Sound = Instance.new("Sound")
+
+
+local SoundId = Instance.new("StringValue")
+
+
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+
+
+SoundPlayer.Name = "SoundPlayer"
+
+
+SoundPlayer.Parent = ScreenGui
+
+
+SoundPlayer.AnchorPoint = Vector2.new(0.5, 0.5)
+
+
+SoundPlayer.BackgroundColor3 = Color3.fromRGB(43, 0, 71)
+
+
+SoundPlayer.Position = UDim2.new(0.5, 0, 0.5, 0)
+
+
+SoundPlayer.Size = UDim2.new(0, 308, 0, 97)
+
+
+
+Sound.Parent = SoundPlayer
+
+
+Sound.Playing = true
+
+
+
+SoundId.Parent = SoundPlayer
+
+
+SoundId.Value = _G.sound
+
+
+
+UICorner.CornerRadius = UDim.new(0, 10)
+
+
+UICorner.Parent = SoundPlayer
+
+
+
+Image.Name = "Image"
+
+
+Image.Parent = SoundPlayer
+
+
+Image.BackgroundColor3 = Color3.fromRGB(54, 0, 93)
+
+
+Image.Position = UDim2.new(0.0352554321, 0, 0.149928778, 0)
+
+
+Image.Size = UDim2.new(0, 69, 0, 66)
+
+
+Image.Image = "rbxassetid://7072705757"
+
+
+Image.ImageColor3 = Color3.fromRGB(170, 170, 255)
+
+
+
+UICorner_2.CornerRadius = UDim.new(0, 10)
+
+
+UICorner_2.Parent = Image
+
+
+
+Header.Name = "Header"
+
+
+Header.Parent = SoundPlayer
+
+
+Header.BackgroundColor3 = Color3.fromRGB(54, 0, 93)
+
+
+Header.Position = UDim2.new(0.279640138, 0, 0.296658367, 0)
+
+
+Header.Size = UDim2.new(0, 171, 0, 39)
+
+
+Header.Font = Enum.Font.SourceSans
+
+
+Header.Text = "@name@"
+
+
+Header.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+
+Header.TextScaled = true
+
+
+Header.TextSize = 25.000
+
+
+Header.TextWrapped = true
+
+
+
+UICorner_3.CornerRadius = UDim.new(0, 10)
+
+
+UICorner_3.Parent = Header
+
+
+
+PlayBtn.Name = "PlayBtn"
+
+
+PlayBtn.Parent = SoundPlayer
+
+
+PlayBtn.BackgroundColor3 = Color3.fromRGB(54, 0, 93)
+
+
+PlayBtn.BackgroundTransparency = 1.000
+
+
+PlayBtn.Position = UDim2.new(0.856641769, 0, 0.350515455, 0)
+
+
+PlayBtn.Size = UDim2.new(0, 31, 0, 30)
+
+
+PlayBtn.Image = "rbxassetid://7072720676"
+
+
+
+-- Scripts:
+
+
+
+local function HOAECW_fake_script() -- SoundPlayer.LocalScript 
+
+
+	local script = Instance.new('LocalScript', SoundPlayer)
+
+
+
+	script.Parent.PlayBtn.MouseButton1Down:Connect(function()
+
+
+		script.Parent.Sound.SoundId = "rbxassetid://"..script.Parent.SoundId.Value
+
+
+		if script.Parent.PlayBtn.Image == "rbxassetid://7072720676" then
+
+
+			script.Parent.Sound:Play()
+
+
+			wait(0.1)
+
+
+			script.Parent.PlayBtn.Image = "rbxassetid://7072719997"
+
+
+		elseif script.Parent.PlayBtn.Image == "rbxassetid://7072719997" then
+
+
+			script.Parent.Sound:Pause()
+
+
+			wait(0.1)
+
+
+			script.Parent.PlayBtn.Image = "rbxassetid://7072720676"
+
+
+		end
+
+
+	end)
+
+
+	while wait() do
+
+
+		script.Parent.Header.Text = game:GetService("MarketplaceService"):GetProductInfo(script.Parent.SoundId.Value).Name
+
+
+	end
+
+
+end
+
+
+coroutine.wrap(HOAECW_fake_script)()
+
+
+local function DCTLJ_fake_script() -- SoundPlayer.Dragify 
+
+
+	local script = Instance.new('LocalScript', SoundPlayer)
+
+
+
+	local UserInputService = game:GetService("UserInputService")
+
+
+	
+
+
+	local gui = script.Parent
+
+
+	
+
+
+	local dragging
+
+
+	local dragInput
+
+
+	local dragStart
+
+
+	local startPos
+
+
+	
+
+
+	local function update(input)
+
+
+		local delta = input.Position - dragStart
+
+
+		gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+
+
+	end
+
+
+	
+
+
+	gui.InputBegan:Connect(function(input)
+
+
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+
+
+			dragging = true
+
+
+			dragStart = input.Position
+
+
+			startPos = gui.Position
+
+
+	
+
+
+			input.Changed:Connect(function()
+
+
+				if input.UserInputState == Enum.UserInputState.End then
+
+
+					dragging = false
+
+
+				end
+
+
+			end)
+
+
+		end
+
+
+	end)
+
+
+	
+
+
+	gui.InputChanged:Connect(function(input)
+
+
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+
+
+			dragInput = input
+
+
+		end
+
+
+	end)
+
+
+	
+
+
+	UserInputService.InputChanged:Connect(function(input)
+
+
+		if input == dragInput and dragging then
+
+
+			update(input)
+
+
+		end
+
+
+	end)
+
+
+end
+
+
+coroutine.wrap(DCTLJ_fake_script)()
+
+
